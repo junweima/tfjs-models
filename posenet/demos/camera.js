@@ -310,15 +310,21 @@ function detectPoseInRealTime(video, net) {
 function evaluate_poses() {
   if (poses_bank.length < 2) {
     score_info.innerHTML = "didn't detect anything";
+    score_info.style.fontSize = "xx-large";
   }
-
-  if (
+  
+  else if (
     poses_bank[poses_bank.length - 1][0].keypoints[1].position.x >
     poses_bank[0][0].keypoints[1].position.x
-  ) {
-    score_info.innerHTML = "moved right";
-  } else {
-    score_info.innerHTML = "moved left";
+    ) {
+      score_info.innerHTML = "moved right";
+      score_info.style.color = "blue";
+      score_info.style.fontSize = "xx-large";
+      
+    } else {
+      score_info.innerHTML = "moved left";
+      score_info.style.color = "red";
+      score_info.style.fontSize = "xx-large";
   }
   // clear
   poses_bank = [];
@@ -342,7 +348,7 @@ export async function bindPage() {
   start_btn.onclick = function() {
     setTimeout(() => {
       evaluate_poses();
-    }, 5000);
+    }, 2500);
   };
 
   var start_t = document.createTextNode("Start workout");
